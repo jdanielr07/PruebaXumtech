@@ -1,30 +1,45 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3001';  // URL local del backend
-const API_KEY = 'da6633a3-bc21-44f7-8344-985edc024fdb';  // Debe coincidir con la del backend
+const API_URL = 'http://localhost:3001';
+const API_KEY = 'da6633a3-bc21-44f7-8344-985edc024fdb';
 
-async function getResponses() {
+export async function processMessage(message) {
   try {
-    const response = await axios.get(`${API_URL}/responses`, {
-      headers: { 'X-API-Key': API_KEY }
-    });
+    const response = await axios.post(`${API_URL}/process_message`, 
+      { message },
+      { headers: { 'X-API-Key': API_KEY } }
+    );
+    console.log('Respuesta del servidor en processMessage:', response.data);  // Log de la respuesta
     return response.data;
   } catch (error) {
-    console.error('Error al obtener respuestas:', error);
-    return [];
+    console.error('Error al procesar el mensaje:', error);
+    throw error;
   }
 }
 
-export async function processMessage(message) {
-  const responses = await getResponses();
-  
-  const matchingResponse = responses.find(r => 
-    message.toLowerCase().includes(r.intent.toLowerCase())
-  );
-  
-  if (matchingResponse) {
-    return matchingResponse.response;
+export async function addQAPair(question, answer) {
+  try {
+    const response = await axios.post(`${API_URL}/qa_pairs`, 
+      { question, answer },
+      { headers: { 'X-API-Key': API_KEY } }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error al agregar nuevo par de pregunta y respuesta:', error);
+    throw error;
   }
-  
-  return "Lo siento, no entiendo esa pregunta. ¿Podrías reformularla?";
+}
+
+export async function selectSuggestedQuestion(originalMessage, selectedQuestion) {
+  try {
+    const response = await axios.post(`${API_URL}/select_suggested_question`, 
+      { originalMessage, selectedQuestion }, 
+      { headers: { 'X-API-Key': API_KEY } }
+    );
+    console.log('Respuesta del servidor en selectSuggestedQuestion:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error al seleccionar la pregunta sugerida:', error);
+    throw error;
+  }
 }
