@@ -47,7 +47,7 @@ const db = new sqlite3.Database('./chatbot.db', (err) => {
               { question: '¿Cuál es el sentido de la vida?', answer: '¡Esa es una pregunta profunda! Filosóficamente, varía según las creencias de cada uno. ¿Quieres discutir sobre filosofía?' },
               { question: '¿Cuántos años tienes?', answer: 'Soy un programa de computadora, así que no tengo edad en el sentido tradicional. Fui creado recientemente para ayudar a responder preguntas.' },
               { question: '¿Qué puedes hacer?', answer: 'Puedo responder preguntas, proporcionar información y ayudar con varias tareas. ¿Hay algo específico en lo que pueda ayudarte?' },
-              { question: '¿Quién te creó?', answer: 'Fui creado por un equipo de desarrolladores como parte de un proyecto de chatbot. ¿Tienes curiosidad sobre la inteligencia artificial?' }
+              { question: '¿Quién te creó?', answer: 'Fui creado por un desarrollador como parte de un proyecto de chatbot. ¿Tienes curiosidad sobre la inteligencia artificial?' }
             ];
             
             const insertStmt = db.prepare("INSERT INTO qa_pairs (question, answer) VALUES (?, ?)");
@@ -56,7 +56,6 @@ const db = new sqlite3.Database('./chatbot.db', (err) => {
             });
             insertStmt.finalize();
             
-            console.log('Datos de muestra insertados en qa_pairs.');
           }
         });
       }
@@ -187,14 +186,10 @@ app.post('/process_message', verifyApiKey, async (req, res) => {
     });
 
     const questions = rows.map(row => row.question);
-    console.log("Preguntas:", questions);
     const matches = stringSimilarity.findBestMatch(message, questions);
-    
-    console.log('Mejor coincidencia:', matches.bestMatch);
-
+  
     if (matches.bestMatch.rating > 0.6) {
       const bestMatchIndex = matches.bestMatchIndex;
-      console.log('Respuesta entendida:', rows[bestMatchIndex].answer);
       return res.json({ 
         response: rows[bestMatchIndex].answer,
         understood: true
@@ -212,15 +207,12 @@ app.post('/process_message', verifyApiKey, async (req, res) => {
       const questions_associated = associations.map(assoc => assoc.original_question);
       const matches_associated = stringSimilarity.findBestMatch(message, questions_associated);
       
-      console.log('Mejor coincidencia asociada:', matches_associated);
-
       if (matches_associated.bestMatch.rating > 0.6) {
         const bestMatchIndex = matches_associated.bestMatchIndex;
         const associatedQuestion = associations[bestMatchIndex].associated_question;
         const question = rows.find(r => r.question === associatedQuestion);
         
         if (question) {
-          console.log('Respuesta entendida (asociada):', question.answer);
           return res.json({ 
             response: question.answer,
             understood: true
@@ -242,8 +234,6 @@ app.post('/process_message', verifyApiKey, async (req, res) => {
 
     const selectedMatches = topMatches.slice(0, 3);
     
-    console.log('Preguntas sugeridas:', selectedMatches);
-
     res.json({ 
       response: "No estoy seguro de entender tu pregunta. ¿Te refieres a alguna de estas?",
       understood: false,

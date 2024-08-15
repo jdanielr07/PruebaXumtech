@@ -17,6 +17,7 @@ function ChatWindow() {
 
   useEffect(scrollToBottom, [messages]);
 
+  // Función para manejar el envío de un mensaje
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (input.trim()) {
@@ -39,6 +40,7 @@ function ChatWindow() {
     }
   };
 
+  // Función para manejar la selección de la pregunta sugerida
   const handleSelectQuestion = async (selectedQuestion) => {
     setMessages(prev => [...prev, { text: selectedQuestion, sender: 'user' }]);
   
@@ -59,7 +61,7 @@ function ChatWindow() {
       setMessages(prev => [...prev, { text: "Lo siento, ha ocurrido un error.", sender: 'bot' }]);
     }
   };
-
+  // Función para manejar la selección de la pregunta 'Ninguna de las anteriores se ajusta a mi pregunta.'
   const handleNoneOfAbove = async () => {
     setMessages(prev => [...prev, { text: "Ninguna de las anteriores se ajusta a mi pregunta.", sender: 'user' }]);
     try {
@@ -76,7 +78,8 @@ function ChatWindow() {
       setMessages(prev => [...prev, { text: "Lo siento, ha ocurrido un error.", sender: 'bot' }]);
     }
   };
-
+  
+  // Función para manejar la creación de una nueva pregunta y respuesta
   const handleAddQAPair = async (e) => {
     e.preventDefault();
     if (newQuestion.trim() && newAnswer.trim()) {
@@ -95,8 +98,8 @@ function ChatWindow() {
 
   return (
     <div className="flex flex-col w-full max-w-md mx-auto h-[600px] bg-white rounded-lg shadow-2xl overflow-hidden">
-      <div className="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-4 text-center font-bold text-xl">
-        Mi Chatbot 🤖
+      <div className="bg-gray-700 text-white p-4 text-center font-bold text-xl">
+        Chatbot
       </div>
       <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-100">
         {messages.map((msg, index) => (
@@ -176,7 +179,7 @@ function ChatWindow() {
             />
             <button
               type="submit"
-              className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               Enviar
             </button>
@@ -186,7 +189,7 @@ function ChatWindow() {
       {!isAddingQA && (
         <button
           onClick={() => setIsAddingQA(true)}
-          className="m-4 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="m-4 px-4 py-2 bg-lime-400 text-white rounded-lg hover:bg-lime-500 focus:outline-none focus:ring-2 focus:ring-lime-300"
         >
           Añadir nueva pregunta y respuesta
         </button>

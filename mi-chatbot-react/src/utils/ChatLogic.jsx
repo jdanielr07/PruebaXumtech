@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3001';
-const API_KEY = 'da6633a3-bc21-44f7-8344-985edc024fdb';
+const API_URL = process.env.REACT_APP_API_URL;
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 export async function processMessage(message) {
   try {
