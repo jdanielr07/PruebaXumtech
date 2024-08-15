@@ -7,4 +7,4 @@
 
 > node server.js
 
-(https://xum-tech.com/wp-content/themes/xumtech/assets/img/logo.svg)
+![Xumtech](https://xum-tech.com/wp-content/themes/xumtech/assets/img/logo.svg)
