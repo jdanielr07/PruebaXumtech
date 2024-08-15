@@ -6,7 +6,7 @@
 
 > npm start
 
-(https://xum-tech.com/wp-content/themes/xumtech/assets/img/logo.svg)
+![Xumtech](https://xum-tech.com/wp-content/themes/xumtech/assets/img/logo.svg)
 
 # Getting Started with Create React App
 
