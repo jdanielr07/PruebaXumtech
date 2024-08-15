@@ -1,3 +1,13 @@
+
+## Para correr este proyecto use el comando:
+
+> [!NOTE]
+> Asegurese de estar en /mi-chatbot-react
+
+> npm start
+
+(https://xum-tech.com/wp-content/themes/xumtech/assets/img/logo.svg)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
